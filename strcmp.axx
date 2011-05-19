@@ -1,0 +1,27 @@
+STR1: byte 30
+      byte 31
+      byte 32
+      byte 33
+      byte 0
+
+STR2: byte 30
+      byte 31
+      byte 32
+      byte 34
+      byte 0
+
+STRCMP_LOOP: INC R1
+             INC R2
+STRCMP: LDBR R3 R1
+	LDBR R0 R2
+	SUB R3 R0
+	JMPNZ STRCMP_END
+	LDBR R0 R2
+	JMPZ STRCMP_END
+	JMP STRCMP_LOOP
+STRCMP_END: RET
+
+START: LDWI R1 STR1
+       LDWI R2 STR2
+       CALL STRCMP
+       HLT

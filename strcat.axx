@@ -1,0 +1,28 @@
+STR1: byte 30
+      byte 31
+      byte 32
+      byte 33
+      byte 0
+
+STR2: byte 30
+      byte 31
+      byte 32
+      byte 33
+      byte 0
+
+STRCAT_LOOP: INC R1
+STRCAT: LDBR R0 R1
+        JMPNZ STRCAT_LOOP
+	JMP STRCAT_COPY
+STRCAT_COPY_LOOP: INC R1
+                  INC R2
+STRCAT_COPY: LDBR R0 R2
+             STBR R0 R1
+             JMPZ STRCAT_END
+             JMP STRCAT_COPY_LOOP
+STRCAT_END: RET
+
+START: LDWI R1 STR1
+       LDWI R2 STR2
+       CALL STRCAT
+       HLT

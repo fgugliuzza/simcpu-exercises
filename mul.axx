@@ -1,0 +1,17 @@
+; This algorithm supports only positive integers.
+MUL: MV R1 R0
+MUL_LOOP: DEC R2
+          JMPZ MUL_END
+          ADD R1 R0
+          JMPC MUL_ERR
+          JMP MUL_LOOP
+MUL_ERR: LDBI R0 45
+         OUTB R0 0
+         TSTO 0
+         JMPNZ MUL_ERR
+MUL_END: RET
+
+START: LDWI R1 2710
+       LDWI R2 10
+       CALL MUL
+       HLT
