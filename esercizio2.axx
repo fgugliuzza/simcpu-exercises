@@ -1,0 +1,16 @@
+DATA: byte 30
+      byte 31
+      byte 32
+      byte 0
+
+STRLEN: LDWI R0 0
+STRLEN_LOOP: LDBR R2 R1
+             JMPZ STRLEN_RESTITUISCI
+             INC R0
+             INC R1
+	     JMP STRLEN_LOOP
+STRLEN_RESTITUISCI: RET
+
+START: LDWI R1 DATA
+       CALL STRLEN
+       HLT
