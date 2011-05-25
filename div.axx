@@ -1,12 +1,13 @@
 ; This algorithm only supports positive integers.
-DIV: LDWI R0 0
-DIV_LOOP: SUB R2 R1
+DIV: LDWI R0 0000
+DIV_LOOP: MV R1 R3
+          SUB R2 R1
           JMPN DIV_END
           INC R0
           JMP DIV_LOOP
 DIV_END: RET
 
-START: LDWI R1 105
-       LDWI R2 10
+START: LDWI R1 0069
+       LDWI R2 000a
        CALL DIV
        HLT

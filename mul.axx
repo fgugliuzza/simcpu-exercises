@@ -12,6 +12,6 @@ MUL_ERR: LDBI R0 45
 MUL_END: RET
 
 START: LDWI R1 2710
-       LDWI R2 10
+       LDWI R2 0010
        CALL MUL
        HLT
