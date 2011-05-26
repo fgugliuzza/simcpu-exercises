@@ -1,20 +1,17 @@
 MOLT: LDWI R10 0010
       LDWI R0 0000
       MV R15 R2
-      LDWI R6 7fff
 MOLT_LOOP: LDWI R11 0001
            AND R2 R11
            JMPZ MOLT_SHIFT
            ADD R14 R0
 MOLT_SHIFT: RSH R2
-            AND R6 R2 ; Fix per un bug del simulatore
             LDWI R11 0001
             AND R0 R11
             JMPZ MOLT_AND_SHIFT
             LDWI R11 8000
             OR R11 R2
 MOLT_AND_SHIFT: RSH R0
-                AND R6 R0 ; Fix per un bug del simulatore
                 DEC R10
                 JMPZ MOLT_END
                 JMP MOLT_LOOP
