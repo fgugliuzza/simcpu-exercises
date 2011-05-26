@@ -11,6 +11,8 @@ ULTIMO_RESTITUISCI: DEC R1
                     LDBR R0 R1
                     RET
 
-START: LDWI R1 DATA
+START: LDWI R8 0f000 ; Fix per un bug dell'assembler
+       SPWR R8 ; Inizializzo lo stack pointer
+       LDWI R1 DATA
        CALL ULTIMO
        HLT
