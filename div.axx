@@ -1,3 +1,4 @@
+; Questo algoritmo supporta soltanto interi positivi.
 DIV: LDWI R0 0000
 DIV_LOOP: MV R1 R3
           SUB R2 R1
