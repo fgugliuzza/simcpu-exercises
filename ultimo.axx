@@ -1,0 +1,16 @@
+DATA: byte 30
+      byte 31
+      byte 32
+      byte 0
+
+ULTIMO: LDBR R0 R1
+        JMPZ ULTIMO_RESTITUISCI
+        INC R1
+	JMP ULTIMO
+ULTIMO_RESTITUISCI: DEC R1
+                    LDBR R0 R1
+                    RET
+
+START: LDWI R1 DATA
+       CALL ULTIMO
+       HLT

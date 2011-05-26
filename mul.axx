@@ -1,4 +1,4 @@
-; This algorithm supports only positive integers.
+; Questo algoritmo supporta soltanto interi positivi.
 MUL: MV R1 R0
 MUL_LOOP: DEC R2
           JMPZ MUL_END
