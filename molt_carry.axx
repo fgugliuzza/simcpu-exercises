@@ -1,4 +1,4 @@
-; Author: Sergio Parisi, Copyright (C) 2011.
+; Autore: Sergio Parisi, Copyright (C) 2011.
 STACK:   word 0F000
 X:       word 0FFFF
 Y:       word 0FFFF ;9ED868
