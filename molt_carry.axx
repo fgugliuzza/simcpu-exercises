@@ -1,0 +1,39 @@
+; Author: Sergio Parisi, Copyright (C) 2011.
+STACK:   word 0F000
+X:       word 0FFFF
+Y:       word 0FFFF ;9ED868
+
+START:   LDWA R13 STACK
+         SPWR R13
+         LDWA R14 X
+         LDWA R15 Y
+         CALL MULT
+         HLT
+
+MULT:    LDWI R0 0000
+         LDWI R10 0010
+         LDWI R12 0000
+         MV R15 R2
+LOOP:    LDWI R11 0001
+         AND R2 R11
+         JMPZ SHIFT
+         ADD R14 R0
+         JMPC CARRY
+         JMP SHIFT
+CARRY:   LDWI R12 0001
+SHIFT:   RSH R2
+         LDWI R11 0001
+         AND R0 R11
+         JMPZ SHIFT_C
+         LDWI R11 8000
+         OR R11 R2
+SHIFT_C: RSH R0
+         MV R12 R12
+         JMPZ END_SH
+         LDWI R11 8000
+         OR R11 R0
+END_SH:  RSH R12
+         DEC R10
+         JMPZ END
+         JMP LOOP
+END:     RET
