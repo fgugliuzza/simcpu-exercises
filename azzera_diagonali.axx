@@ -1,0 +1,46 @@
+MATRICE: byte 0ff
+         byte 0ff
+         byte 0ff
+         byte 0ff
+         
+         byte 0ff
+         byte 0ff
+         byte 0ff
+         byte 0ff
+         
+         byte 0ff
+         byte 0ff
+         byte 0ff
+         byte 0ff
+         
+         byte 0ff
+         byte 0ff
+         byte 0ff
+         byte 0ff
+
+AZZERA_DIAGONALI: LDWI R13 0000
+                  LDBI R4 00
+                  MV R0 R3
+AZZERA_DIAGONALI_LOOP: ADD R13 R3 ; Vai alla colonna desiderata (prima diagonale)
+                       STBR R4 R3
+                       MV R2 R14
+                       SUB R13 R14
+                       ADD R14 R3 ; Vai all'inizio della prossima riga
+                       MV R3 R15
+                       SUB R13 R15
+                       DEC R15 ; Vai alla colonna desiderata (seconda diagonale)
+                       STBR R4 R15
+                       DEC R14
+                       JMPZ AZZERA_DIAGONALI_END
+                       INC R13
+                       JMP AZZERA_DIAGONALI_LOOP
+AZZERA_DIAGONALI_END: RET
+
+START: LDWI R8 0f000 ; Fix per un bug dell'assembler
+       SPWR R8 ; Inizializzo lo stack pointer
+       LDWI R0 MATRICE
+       LDWI R1 0010
+       ADD R0 R1
+       LDWI R2 0004
+       CALL AZZERA_DIAGONALI
+       HLT
