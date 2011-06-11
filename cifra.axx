@@ -1,0 +1,71 @@
+; Autore: Alberto Palumbo, Copyright (C) 2011.
+;cifrare una stringa s1 che è una sequenza di caratteri alfabetici maiuscoli ASCII memorizzata a partire dalla locazione 0001
+;l'ultimo carattere della stringa s1 è seguito da un carattere di chiusura a scelta (00)
+;il programma deve sostituire ogni carattere della stringa s1 con un altro carattere posizionato N posizioni piu avanti nell'alfabeto inglese
+;il valore di N è diverso per ogni carattere della stringa s1 ed è memorizzato su un vettore scostamenti memorizzato a partire da 0900
+;la cui lunghezza è uguale a s1 quindi il primo elemento di scostamenti sarà il valore N del primo elemento di s1 e cosi via
+;se il valore di N fa si che si passi la Z maiuscola si ricomincia dalla A A=41 decimale 65 B=42 decimale 66
+
+byte 00
+s1: byte 41 ;ALBERTO IN ASCII ESADECIMALE
+byte 4C
+byte 42
+byte 45
+byte 52
+byte 54
+BYTE 4F
+byte 00
+
+vet: byte 01
+byte 02
+byte 03
+byte 04
+byte 05
+byte 06
+byte 07
+BYTE 00
+
+SPOSTA: LDWI R0 VET
+LDWI R2 0900
+LOOP: LDBR R1 R0
+JMPZ CIFRA
+STBR R1 R2
+INC R2
+INC R0
+JMP LOOP
+
+CIFRA: LDWI R0 0900 ;RO INDIRIZZO SCOSTAMENTO
+LDWI R2 S1 ;R1 VALORE SCOSTAMENTI
+LOOP2: LDBI R14 5A ;R14 VALORE DI Z
+LDBR R1 R0 ;R2 INDIRIZZO STRINGA
+LDBR R3 R2 ;R3 VALORE STRINGA
+JMPZ END
+ADD R1 R3
+SUB R3 R14 ;SE LA DIFFERENZA E' NEGATIVA HO PASSATO LA ZETA E DEVO RICOMINCIARE DA A
+JMPN RICOMINCIA
+CORRETTO: STBR R3 R2
+INC R0
+INC R2
+JMP LOOP2
+
+
+RICOMINCIA: LDBI R12 00 ;CONTATORE PER SAPERE QUANTO SI E ALLONTANATO DA Z
+QUI: DEC R3
+INC R12
+LDBI R14 5A
+SUB R3 R14
+JMPZ INIZIADAA
+JMP QUI
+
+
+INIZIADAA: LDBI R3 40 ;AVENDO IN R12 DI QUANTO SI E' SPOSTATO DA Z FACCIAMO PARTIRE R3 DA SUBITO PRIMA DI A E AGGIUNGIAMO R12
+ADD R12 R3
+JMP CORRETTO
+
+
+END: RET
+
+START: LDWI R15 0F00
+SPWR R15
+CALL SPOSTA ;SPOSTARE IL VETTORE SCOSTAMENTI IN 0900 E POI SALTA A CIFRA
+HLT
